@@ -1,6 +1,28 @@
-Graphics_Engine
-===============
+# graphics engine
 
-Let's Make a Graphics engine with Java.
-Why?
-Because we can and I need more practice with it. :'(
+
+### about
+A proof-of-concept graphics engine, implemented in Python.
+
+### dependencies
+The project's dependencies are:
+
+
+
+Install them with:
+
+```bash
+make install
+```
+
+#### compile and run
+
+```bash
+make run
+```
+
+#### delete compiled binaries
+
+```bash
+make clean
+```
