@@ -14,5 +14,5 @@ def new_matrix(rows = 4, cols = 4):
 
 #Print the point list
 def print_matrix( matrix ):
-
+	print [point for point in matrix]
 
