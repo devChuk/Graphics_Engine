@@ -1,0 +1,1 @@
+A program that generates a ppm image file.
