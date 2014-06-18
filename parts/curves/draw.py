@@ -3,9 +3,28 @@ from matrix import *
 import math
 
 def add_circle( points, cx, cy, cz, r, step ):
-
+    x0 = r + cx
+    y0 = cy
+    t = step
+    while t<= 1:
+        x = r * math.cos( 2 * math.pi * t ) + cx
+        y = r * math.sin( 2 * math.pi * t ) + cy
+        add_edge( points, x0, y0, cz, x, y, cz )
+        x0 = x
+        y0 = y
+        t+= step
+    add_edge( points, x0, y0, cz, cx + r, cy, cz )
 def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
-
+    xcoefs = generate_curve_coefs( x0, x1, x2, x3, curve_type )
+    ycoefs = generate_curve_coefs( y0, y1, y2, y3, curve_type )
+    t =  step
+    while t <= 1:
+        x = xcoefs[0][0] * t * t * t + xcoefs[0][1] * t * t + xcoefs[0][2] * t + xcoefs[0][3]
+        y = ycoefs[0][0] * t * t * t + ycoefs[0][1] * t * t + ycoefs[0][2] * t + ycoefs[0][3]
+        add_edge( points, x0, y0, 0, x, y, 0 )
+        x0 = x
+        y0 = y
+        t+= step
 
 def draw_lines( matrix, screen, color ):
     if len( matrix ) < 2:
