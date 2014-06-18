@@ -42,7 +42,61 @@ the trig functions in the math library use radian mesure, but us normal
 humans use degrees, so the file will contain degrees for rotations,
 be sure to conver those degrees to radians
 """
+
+def deg2rad(degree):
+	return ((float)(degree * math.pi / 180))
+
+def trans(func, transform):
+	return matrix_mult(func(*args), transform)
+
 def parse_file( fname, points, transform ):
+	screen = new_screen()
+	with open(fname) as script:
+		for line in script:
+			line = line[:-1]
+
+			if not line.replace(" ","").isdigit():	
+				comm = line.strip()
+				if comm == 'i':
+					transform = ident(points)
+				elif comm == 'a':
+					points = matrix_mult(transform, points)
+					transform = ident(transform)
+				elif comm == 'v':
+					clear_screen(screen)
+					draw_lines(points, screen, [0,225,0])
+					display(screen)
+					sleep(0.5)
+				elif comm == 'q':
+					return
+			else:
+				args = [float(x) for x in line.split()]
+				if comm == 'l':
+					# params = [points].extend([x for x in args])
+					add_edge(points, *[x for x in args])
+				elif comm == 'i':
+					transform = ident(points)
+				elif comm == 's':
+					transform = trans(make_scale, transform)
+				elif comm == 't':
+					transform = trans(make_translate, transform)
+				elif comm == 'x':
+					args = [deg2rad(x) for x in args]
+					transform = trans(make_rotX, transform)	
+				elif comm == 'y':
+					args = [deg2rad(x) for x in args]
+					transform = trans(make_rotY, transform)
+				elif comm == 'z':
+					args = [deg2rad(x) for x in args]
+					transform = trans(make_rotZ, transform)
+				elif comm == 'g':
+					draw_lines(points, screen, [0,225,0] )
+					save_ppm(screen, args[0])
+
+
+
+
+
 
 
 points = []
